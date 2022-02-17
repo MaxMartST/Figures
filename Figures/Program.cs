@@ -94,6 +94,11 @@ namespace Figures
 
         public Square(TypeFigure typeFigure, string nameFigure, double sizeSide) : base(typeFigure, nameFigure)
         {
+            if (typeFigure != TypeFigure.Square)
+            {
+                throw new Exception($"Задан неверный тип фигруры для {TypeFigure.Square}");
+            }
+
             if (sizeSide <= 0)
             {
                 throw new Exception("Размер стороны фигуры должен быть больше нуля");
