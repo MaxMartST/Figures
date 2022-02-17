@@ -92,13 +92,8 @@ namespace Figures
     {
         private double sizeSide;
 
-        public Square(TypeFigure typeFigure, string nameFigure, double sizeSide) : base(typeFigure, nameFigure)
+        public Square(string nameFigure, double sizeSide) : base(TypeFigure.Square, nameFigure)
         {
-            if (typeFigure != TypeFigure.Square)
-            {
-                throw new Exception($"Задан неверный тип фигруры для {TypeFigure.Square}");
-            }
-
             if (sizeSide <= 0)
             {
                 throw new Exception("Размер стороны фигуры должен быть больше нуля");
@@ -125,8 +120,8 @@ namespace Figures
         {
             try
             {
-                var square1 = new Square(TypeFigure.Square, "Квадрат №1", 10);
-                var square2 = new Square(TypeFigure.Square, "Квадрат №2", 4);
+                var square1 = new Square("Квадрат №1", 10);
+                var square2 = new Square("Квадрат №2", 4);
 
                 Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
                     square1.Type,
