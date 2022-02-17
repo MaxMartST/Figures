@@ -16,7 +16,7 @@ namespace Figures
         Ball
     }
 
-    public static class Type
+/*    public static class Type
     {
         public static string GetTypeFigure(this TypeFigure te)
         {
@@ -38,12 +38,52 @@ namespace Figures
                     return "Тип не обнаружен";
             }
         }
-    }
+    }*/
 
     abstract class Figure
     {
-        public abstract TypeFigure TypeFigure { get; set; }
-        public abstract string NameFigure { get; }
+        public Figure(TypeFigure typeFigure, string nameFigure)
+        {
+            if (nameFigure != null)
+            {
+                Name = nameFigure;
+            }
+            else
+            {
+                throw new Exception("Не заданно имя фигуры");
+            }
+
+            if (typeFigure is TypeFigure.Square)
+            {
+                Type = "Квадрат";
+            }
+            else if (typeFigure is TypeFigure.Rectangle)
+            {
+                Type = "Прямоугольник";
+            }
+            else if (typeFigure is TypeFigure.Triangle)
+            {
+                Type = "Треугольник";
+            }
+            else if (typeFigure is TypeFigure.Circle)
+            {
+                Type = "Круг";
+            }
+            else if (typeFigure is TypeFigure.Cube)
+            {
+                Type = "Куб";
+            }
+            else if (typeFigure is TypeFigure.Ball)
+            {
+                Type = "Шар";
+            }
+            else 
+            {
+                throw new Exception("Тип не найден");
+            }
+        }
+        public string Type { get; }
+        public string Name { get; }
         public abstract double Perimeter();
         public abstract double Space();
     }
@@ -52,11 +92,8 @@ namespace Figures
     {
         private double sizeSide;
 
-        public Square(TypeFigure typeFigure, string nameFigure, double sizeSide)
+        public Square(TypeFigure typeFigure, string nameFigure, double sizeSide) : base(typeFigure, nameFigure)
         {
-            this.NameFigure = nameFigure;
-            this.TypeFigure = typeFigure;
-
             if (sizeSide <= 0)
             {
                 throw new Exception("Размер стороны фигуры должен быть больше нуля");
@@ -66,9 +103,6 @@ namespace Figures
                 this.sizeSide = sizeSide;
             }
         }
-        public override TypeFigure TypeFigure { get; set; }
-        public override string NameFigure { get; }
-
         public override double Perimeter()
         {
             return sizeSide * 4;
@@ -87,16 +121,16 @@ namespace Figures
             var square1 = new Square(TypeFigure.Square, "Квадрат №1", 10);
             var square2 = new Square(TypeFigure.Square, "Квадрат №2", 4);
 
-            Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}", 
-                square1.TypeFigure.ToString(),
-                square1.NameFigure, 
-                square1.Space(), 
+            Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
+                square1.Type,
+                square1.Name,
+                square1.Space(),
                 square1.Perimeter());
 
             Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                square2.TypeFigure.ToString(),
-                square2.NameFigure, 
-                square2.Space(), 
+                square2.Type,
+                square2.Name,
+                square2.Space(),
                 square2.Perimeter());
 
             Console.ReadLine();
