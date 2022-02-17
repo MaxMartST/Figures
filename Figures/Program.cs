@@ -118,20 +118,28 @@ namespace Figures
     {
         static void Main(string[] args)
         {
-            var square1 = new Square(TypeFigure.Square, "Квадрат №1", 10);
-            var square2 = new Square(TypeFigure.Square, "Квадрат №2", 4);
+            try
+            {
+                var square1 = new Square(TypeFigure.Square, "Квадрат №1", 10);
+                var square2 = new Square(TypeFigure.Square, "Квадрат №2", 4);
 
-            Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                square1.Type,
-                square1.Name,
-                square1.Space(),
-                square1.Perimeter());
+                Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
+                    square1.Type,
+                    square1.Name,
+                    square1.Space(),
+                    square1.Perimeter());
 
-            Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                square2.Type,
-                square2.Name,
-                square2.Space(),
-                square2.Perimeter());
+                Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
+                    square2.Type,
+                    square2.Name,
+                    square2.Space(),
+                    square2.Perimeter());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadLine();
+            }
 
             Console.ReadLine();
         }
