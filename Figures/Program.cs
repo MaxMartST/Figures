@@ -16,29 +16,29 @@ namespace Figures
         Ball
     }
 
-/*    public static class ErrorLevelExtensions
+    public static class Type
     {
-        public static string GetType(this TypeFigure te)
+        public static string GetTypeFigure(this TypeFigure te)
         {
             switch (te)
             {
                 case TypeFigure.Square:
                     return "Квадрат";
                 case TypeFigure.Rectangle:
-                    return "LOW LEVEL ERROR";
+                    return "Прямоугольник";
                 case TypeFigure.Triangle:
-                    return "MEDIUM LEVEL ERROR";
+                    return "Треугольник";
                 case TypeFigure.Circle:
-                    return "HIGH LEVEL ERROR";
-                case TypeFigure.Cir:
-                    return "HIGH LEVEL ERROR";
-                case TypeFigure.Circle:
-                    return "HIGH LEVEL ERROR";
+                    return "Круг";
+                case TypeFigure.Cube:
+                    return "Куб";
+                case TypeFigure.Ball:
+                    return "Шар";
                 default:
-                    return "NO VALUE GIVEN";
+                    return "Тип не обнаружен";
             }
         }
-    }*/
+    }
 
     abstract class Figure
     {
