@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,6 +63,7 @@ namespace Figures
         public string Name { get; }
         public abstract double Perimeter();
         public abstract double Space();
+        public abstract string GetInformationStringFigure();
     }
 
     abstract class ThreeDimensionalFigure : Figure
@@ -86,6 +88,16 @@ namespace Figures
             
             this.sizeSide = sizeSide;
         }
+
+        public override string GetInformationStringFigure()
+        {
+            return String.Format("Тип фигуры: {0}\nИмя фигуры: {1}\nПлощадь: {2}\nПеримерт: {3}",
+                    Type,
+                    Name,
+                    Space(),
+                    Perimeter());
+        }
+
         public override double Perimeter()
         {
             return this.sizeSide * 4;
@@ -114,6 +126,15 @@ namespace Figures
          
         }
 
+        public override string GetInformationStringFigure()
+        {
+            return String.Format("Тип фигуры: {0}\nИмя фигуры: {1}\nПлощадь: {2}\nПеримерт: {3}",
+                    Type,
+                    Name,
+                    Space(),
+                    Perimeter());
+        }
+
         public override double Perimeter()
         {
             return (this.width + this.height) * 2;
@@ -139,6 +160,15 @@ namespace Figures
             this.side1 = side1;
             this.side2 = side2;
             this.side3 = side3;
+        }
+
+        public override string GetInformationStringFigure()
+        {
+            return String.Format("Тип фигуры: {0}\nИмя фигуры: {1}\nПлощадь: {2}\nПеримерт: {3}",
+                    Type,
+                    Name,
+                    Space(),
+                    Perimeter());
         }
 
         public override double Perimeter()
@@ -169,6 +199,15 @@ namespace Figures
             this.radius = radius;
         }
 
+        public override string GetInformationStringFigure()
+        {
+            return String.Format("Тип фигуры: {0}\nИмя фигуры: {1}\nПлощадь: {2}\nПеримерт: {3}",
+                    Type,
+                    Name,
+                    Space(),
+                    Perimeter());
+        }
+
         public override double Perimeter()
         {
             return 0;
@@ -192,6 +231,16 @@ namespace Figures
             }
 
             this.sizeSide = sizeSide;
+        }
+
+        public override string GetInformationStringFigure()
+        {
+            return String.Format("Тип фигуры: {0}\nИмя фигуры: {1}\nПлощадь: {2}\nПеримерт: {3}\nОбъем: {4}",
+                    Type,
+                    Name,
+                    Space(),
+                    Perimeter(),
+                    Volume());
         }
 
         public override double Perimeter()
@@ -224,6 +273,16 @@ namespace Figures
             this.radius = radius;
         }
 
+        public override string GetInformationStringFigure()
+        {
+            return String.Format("Тип фигуры: {0}\nИмя фигуры: {1}\nПлощадь: {2}\nПеримерт: {3}\nОбъем: {4}",
+                    Type,
+                    Name,
+                    Space(),
+                    Perimeter(),
+                    Volume());
+        }
+
         public override double Perimeter()
         {
             return 0;
@@ -242,22 +301,47 @@ namespace Figures
 
     class Program
     {
+        static private int GetRandomSize()
+        {
+            Random rnd = new Random();
+            int size = 0;
+
+            do
+            {
+                size = rnd.Next(1, 1000);
+            }
+            while (size <= 0);
+
+            return size;
+        }
+
         static private Figure GetFigure(int numberFigure, int numberTypeFigure)
         {
+            int sizeSide, sizeSide1, sizeSide2;
+
             switch (numberTypeFigure)
             {
                 case (int)TypeFigure.Square:
-                    return new Square($"Квадрат №{numberFigure}", 10);
+                    sizeSide = GetRandomSize();
+                    return new Square($"Квадрат №{numberFigure}", sizeSide);
                 case (int)TypeFigure.Rectangle:
-                    return new Rectangle($"Прямоугольник №{numberFigure}", 10, 20);
+                    sizeSide = GetRandomSize();
+                    sizeSide1 = GetRandomSize();
+                    return new Rectangle($"Прямоугольник №{numberFigure}", sizeSide, sizeSide1);
                 case (int)TypeFigure.Triangle:
-                    return new Triangle($"Треугольник №{numberFigure}", 15, 15, 15);
+                    sizeSide = GetRandomSize();
+                    sizeSide1 = GetRandomSize();
+                    sizeSide2 = GetRandomSize();
+                    return new Triangle($"Треугольник №{numberFigure}", sizeSide, sizeSide1, sizeSide2);
                 case (int)TypeFigure.Circle:
-                    return new Circle($"Круг №{numberFigure}", 25);
+                    sizeSide = GetRandomSize();
+                    return new Circle($"Круг №{numberFigure}", sizeSide);
                 case (int)TypeFigure.Cube:
-                    return new Cube($"Куб №{numberFigure}", 10);
+                    sizeSide = GetRandomSize();
+                    return new Cube($"Куб №{numberFigure}", sizeSide);
                 case (int)TypeFigure.Ball:
-                    return new Ball($"Шар №{numberFigure}", 20);
+                    sizeSide = GetRandomSize();
+                    return new Ball($"Шар №{numberFigure}", sizeSide);
                 default:
                     throw new Exception("Тип фигуры не найден");
             }
@@ -272,7 +356,7 @@ namespace Figures
 
             for (int i = 0; i < figures.Length; i++)
             {
-                var indexTypeFigure = rnd.Next(0, max - 1);
+                var indexTypeFigure = rnd.Next(0, max);
                 var numberFigure = i + 1;
 
                 figures[i] = GetFigure(numberFigure, indexTypeFigure);
@@ -284,116 +368,57 @@ namespace Figures
         static void Main(string[] args)
         {
             int number = 0;
+            Figure[] figures;
 
-            //while (number == 0)
-            //{
-            //    try
-            //    {
-            //        Console.Write("Задайте количество фигур: ");
-
-            //        string str = Console.ReadLine();
-            //        number = Convert.ToInt32(str);
-
-            //        Console.Write("Количество фигур равно {0}", number);
-            //        break;
-            //    }
-            //    catch (FormatException e)
-            //    {
-            //        Console.WriteLine("Input string is not a sequence of digits.");
-            //    }
-            //    catch (OverflowException e)
-            //    {
-            //        Console.WriteLine("The number cannot fit in int.");
-            //    }
-            //}
-
-            //number = 0;
-            //string figure;
-
-            //switch (number)
-            //{
-            //    case (int)TypeFigure.Square:
-            //        figure = "Квадрат";
-            //        break;
-            //    case (int)TypeFigure.Rectangle:
-            //        figure = "Прямоугольник";
-            //        break;
-            //    case (int)TypeFigure.Triangle:
-            //        figure = "Треугольник";
-            //        break;
-            //    case (int)TypeFigure.Circle:
-            //        figure = "Круг";
-            //        break;
-            //    case (int)TypeFigure.Cube:
-            //        figure = "Куб";
-            //        break;
-            //    case (int)TypeFigure.Ball:
-            //        figure = "Шар";
-            //        break;
-            //    default:
-            //        figure = "нет типа";
-            //        break;
-            //}
-
-            //Console.WriteLine(figure);
-
-            var figures = GetArrayFigure(2);
-
-            foreach (var figure in figures)
+            while (number == 0)
             {
-                var name = figure.Name;
-                var type = figure.Type;
+                try
+                {
+                    Console.Write("Задайте количество фигур: ");
 
-                Console.WriteLine("Фигура типа {0}, с именем {1}", type, name);
+                    string str = Console.ReadLine();
+                    number = Convert.ToInt32(str);
+
+                    Console.WriteLine("Количество фигур равно {0}", number);
+                    Console.WriteLine();
+                    break;
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine("Input string is not a sequence of digits.");
+                }
+                catch (OverflowException e)
+                {
+                    Console.WriteLine("The number cannot fit in int.");
+                }
             }
 
             try
             {
-                //var square1 = new Square("Квадрат №1", 10);
-                //var rectangle1 = new Rectangle("Прямоугольник №1", 10, 20);
-                //var triangle1 = new Triangle("Треугольник №1", 15, 15, 15);
-                //var circle1 = new Circle("Круг №1", 25);
+                figures = GetArrayFigure(number);
 
-                //var cube1 = new Cube("Куб №1", 10);
-                //var ball1 = new Ball("Шар №1", 20);
+                foreach (var figure in figures)
+                {
+                    Console.WriteLine(figure.GetInformationStringFigure());
+                    Console.WriteLine();
+                }
 
-                //Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                //    square1.Type,
-                //    square1.Name,
-                //    square1.Space(),
-                //    square1.Perimeter());
 
-                //Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                //    rectangle1.Type,
-                //    rectangle1.Name,
-                //    rectangle1.Space(),
-                //    rectangle1.Perimeter());
+                Console.WriteLine("Поиск фигур с максимальной площадью и запись данных в файл figures.txt");
+                double maxSpace = figures.Max(f => f.Space());
+                var maxSpaceFigures = figures.Where(f => f.Space() == maxSpace);
 
-                //Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                //    triangle1.Type,
-                //    triangle1.Name,
-                //    triangle1.Space(),
-                //    triangle1.Perimeter());
+                using (StreamWriter sw = new StreamWriter("figures.txt", false))
+                {
+                    foreach (var figure in maxSpaceFigures)
+                    {
+                        sw.WriteLine("Фигура под именем {0} имеет максимальную площадь: {1}",
+                            figure.Name,
+                            figure.Space());
+                    }
+                }
 
-                //Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2} и перимерт равный {3}",
-                //    circle1.Type,
-                //    circle1.Name,
-                //    circle1.Space(),
-                //    circle1.Perimeter());
-
-                //Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2}, перимерт равный {3} и объем равный {4}",
-                //    cube1.Type,
-                //    cube1.Name,
-                //    cube1.Space(),
-                //    cube1.Perimeter(),
-                //    cube1.Volume());
-
-                //Console.WriteLine("Фигура типа {0}, с именем {1}, имеет площадь равную {2}, перимерт равный {3} и объем равный {4}",
-                //    ball1.Type,
-                //    ball1.Name,
-                //    ball1.Space(),
-                //    ball1.Perimeter(),
-                //    ball1.Volume());
+                Console.WriteLine("Запись данных в файл figures.txt завершена");
             }
             catch (Exception ex)
             {
