@@ -51,7 +51,7 @@ namespace Figures
                     sizeSide = GetRandomSize();
                     return new Ball($"Шар №{numberFigure}", sizeSide);
                 default:
-                    throw new Exception("Тип фигуры не найден");
+                    throw new FigureException("Тип фигуры не найден");
             }
         }
 
@@ -73,34 +73,46 @@ namespace Figures
             return figures;
         }
 
+        static private int GetNumberFromInputString(string inputStr)
+        {
+            try
+            {
+                return Convert.ToInt32(inputStr);
+            }
+            catch (FormatException e)
+            {
+                throw new FigureException("Входная строка не является последовательностью цифр.");
+            }
+            catch (OverflowException e)
+            {
+                throw new FigureException("Число не помещается в int.");
+            }  
+        }
+
         static int GetNumberOfFigures()
         {
-            int number = 0;
+            int numberOfFigures = 0;
 
-            while (number == 0)
+            while (numberOfFigures == 0)
             {
                 try
                 {
                     Console.Write("Задайте количество фигур: ");
 
                     string str = Console.ReadLine();
-                    number = Convert.ToInt32(str);
+                    numberOfFigures = GetNumberFromInputString(str);
 
-                    Console.WriteLine("Количество фигур равно {0}", number);
+                    Console.WriteLine("Количество фигур равно {0}", numberOfFigures);
                     Console.WriteLine();
                     break;
                 }
-                catch (FormatException e)
+                catch (FigureException fe)
                 {
-                    Console.WriteLine("Input string is not a sequence of digits.");
-                }
-                catch (OverflowException e)
-                {
-                    Console.WriteLine("The number cannot fit in int.");
+                    Console.WriteLine($"Ошибка: {fe.Message}");
                 }
             }
 
-            return number;
+            return numberOfFigures;
         }
 
         static void Main(string[] args)
@@ -133,9 +145,9 @@ namespace Figures
 
                 Console.WriteLine("Запись данных в файл figures.txt завершена");
             }
-            catch (Exception ex)
+            catch (FigureException fe)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Ошибка: {fe.Message}");
                 Console.ReadLine();
             }
 

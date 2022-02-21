@@ -10,7 +10,7 @@ namespace Figures
         {
             if (sizeSide <= 0)
             {
-                throw new Exception("Размер стороны фигуры должен быть больше нуля");
+                throw new FigureException("Размер стороны фигуры должен быть больше нуля");
             }
 
             this.sizeSide = sizeSide;
@@ -45,7 +45,7 @@ namespace Figures
         {
             if (width <= 0 || height <= 0)
             {
-                throw new Exception("Размер стороны фигуры должен быть больше нуля");
+                throw new FigureException("Размер стороны фигуры должен быть больше нуля");
             }
 
             this.width = width;
@@ -81,7 +81,7 @@ namespace Figures
         {
             if (side1 <= 0 || side2 <= 0 || side1 <= 0)
             {
-                throw new Exception("Размер стороны фигуры должен быть больше нуля");
+                throw new FigureException("Размер стороны фигуры должен быть больше нуля");
             }
 
             this.side1 = side1;
@@ -120,7 +120,7 @@ namespace Figures
         {
             if (radius <= 0)
             {
-                throw new Exception("Радиус должен быть больше нуля");
+                throw new FigureException("Радиус должен быть больше нуля");
             }
 
             this.radius = radius;

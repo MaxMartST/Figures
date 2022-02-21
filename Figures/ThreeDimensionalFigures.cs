@@ -19,7 +19,7 @@ namespace Figures
         {
             if (sizeSide <= 0)
             {
-                throw new Exception("Размер стороны фигуры должен быть больше нуля");
+                throw new FigureException("Размер стороны фигуры должен быть больше нуля");
             }
 
             this.sizeSide = sizeSide;
@@ -59,7 +59,7 @@ namespace Figures
         {
             if (radius <= 0)
             {
-                throw new Exception("Радиус должен быть больше нуля");
+                throw new FigureException("Радиус должен быть больше нуля");
             }
 
             this.radius = radius;

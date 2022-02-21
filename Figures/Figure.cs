@@ -51,7 +51,7 @@ namespace Figures
             }
             else
             {
-                throw new Exception("Тип не найден");
+                throw new FigureException("Тип не найден");
             }
         }
         public string Type { get; }
